@@ -23,7 +23,7 @@
     todoStore.addTodo({
       done: false,
       text: newTask,
-      date: date.value
+      dttm: date.value
     });
     newTask = ref('');
   }
@@ -46,11 +46,27 @@
 
 <template>
   <v-container style="max-width: 500px">
-    <h2 class ='text-h4 pa-4'>
-      😢 todo List 😢
+    <h2 class ='text-h4 pa-4 font-weight-black text-center' >
+      😢 Todo List 😢
     </h2>
     
     <!-- form -->
+    <v-menu>
+      <template v-slot:activator="{props}">
+        <v-text-field
+            v-model="date"
+            label="Write down the date of your to-do!"
+            prepend-icon="mdi-calendar"
+            locale ="ko"
+            readonly
+            v-bind="props"
+          ></v-text-field>
+      </template>
+      <v-date-picker 
+        color="primary" 
+        v-model="date" ></v-date-picker>
+    </v-menu>
+
     <v-text-field
       v-model="newTask"
       label="Add your work!"
@@ -68,26 +84,10 @@
         </v-fade-transition>
       </template>
     </v-text-field>
-    <v-menu >
-      <template v-slot:activator="{props}">
-        <v-text-field
-            v-model="date"
-            label="Picker without buttons"
-            prepend-icon="mdi-calendar"
-            locale ="ko"
-            readonly
-            v-bind="props"
-          ></v-text-field>
-      </template>
-      <v-date-picker 
-        color="primary" 
-        v-model="date" ></v-date-picker>
-    </v-menu>
-    
     <!-- form end-->
 
     <!-- task -->
-    <h2 class="text-h4 text-success ps-4">
+    <h2 class="text-h4 font-weight-black text-blue-lighten-1 ps-4">
       Tasks:&nbsp;
       <v-fade-transition leave-absolute>
         <span :key="`tasks-${tasks.length}`">
@@ -115,6 +115,7 @@
       <v-spacer></v-spacer>
 
       <v-progress-circular
+      color="blue-lighten-1"
         v-model="progress"
         class="me-2"
       ></v-progress-circular>
@@ -142,15 +143,17 @@
             </template>
 
             <v-list-item-title>
-              <span :class="task.done ? 'text-grey' : 'text-primary'">{{ task.text }}</span>
+              <span :class="task.done ? 'text-grey-lighten-1' : 'text-balck'">{{ task.text }} </span>
+              
             </v-list-item-title>
-
+            <span :class="task.done ? 'text-grey-lighten-1' : 'text-success'" class ="text-caption">{{ task.dttm }} </span>
             <template v-slot:append>
               
                 <v-icon v-if="task.done" color="success">
                   mdi-check
                 </v-icon>
-              <v-btn v-else density="compact" size="small" icon="mdi-delete" color="fall" @click.stop="deleteTodo(i)"></v-btn>
+                
+              <v-icon v-else icon="mdi-delete" color="red-darken-1" @click.stop="deleteTodo(i)"></v-icon>
             </template>
           </v-list-item>
         </template>

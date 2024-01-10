@@ -6,6 +6,4 @@ import DataInput from "./components/todo/DataInput.vue"
 
 <template>
 <Todo></Todo>
-<!-- <DataInput></DataInput> -->
-<!-- <Calender></Calender> -->
 </template>
