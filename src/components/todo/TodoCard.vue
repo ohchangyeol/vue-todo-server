@@ -20,7 +20,7 @@
       group
       tag="v-list"
     >
-    <!-- <TodoItem  v-for="(todo, i) in todos" :key="`${i}-${todo.text}`" :todo ="todo :idx = i"/> -->
+    <!-- <TodoItem  v-for="(todo, i) in todos" :key="`${i}-${todo.text}`" :todo ="todo" :idx = "i"/> -->
 
       <template v-for="(todo, i) in todos" :key="`${i}-${todo.text}`">
 
@@ -49,6 +49,6 @@
         </template>
         </v-list-item>
     </template>
-    </v-slide-y-transition>
+     </v-slide-y-transition>
   </v-card>
 </template>
