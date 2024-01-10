@@ -13,12 +13,15 @@ import * as directives from 'vuetify/directives'
 import { VCalendar } from 'vuetify/labs/VCalendar'
 import DayJsAdapter from '@date-io/dayjs'
 
-
+import ko from 'date-fns/locale/ko'
 
 const vuetify = createVuetify({
   components ,
   date: {
     adapter: DayJsAdapter,
+    locale: {
+      ko: ko,
+    },
   },
   directives,
   icons: {

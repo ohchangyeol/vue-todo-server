@@ -1,35 +1,47 @@
 <script setup>
-  import { computed, ref, onMounted } from "vue";
+  import { computed, ref, watch } from "vue";
   import {todoStore} from "../../store/todoStore";
 
   const tasks = todoStore.getTodos();
-
+  const date = ref((new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10));
   let newTask = ref('');
-
-  console.log(todoStore);
 
   const completedTasks = computed(()=>{
     return tasks.filter(task => task.done).length
   })
-
+  
   const progress = computed(()=>{
-    return completedTasks / tasks.length * 100
+    return completedTasks.value / tasks.length * 100
   })
-
+  
   const remainingTasks = computed(()=>{
-    return tasks.length - completedTasks
+    return tasks.length - completedTasks.value
   })
+ 
 
   function create() {
     todoStore.addTodo({
       done: false,
       text: newTask,
+      date: date.value
     });
     newTask = ref('');
   }
 
+  function deleteTodo(index) {
+    todoStore.removeTodo(index)
+    console.log(tasks)
+  }
 
-
+  watch(date, (newVal)=>{
+    if(typeof newVal !== 'string'){
+      date.value = formatDate(newVal);  
+    }
+  })
+  
+  const formatDate = (date) => {
+    return date.toISOString().substr(0, 10);
+}
 </script>
 
 <template>
@@ -56,7 +68,22 @@
         </v-fade-transition>
       </template>
     </v-text-field>
-
+    <v-menu >
+      <template v-slot:activator="{props}">
+        <v-text-field
+            v-model="date"
+            label="Picker without buttons"
+            prepend-icon="mdi-calendar"
+            locale ="ko"
+            readonly
+            v-bind="props"
+          ></v-text-field>
+      </template>
+      <v-date-picker 
+        color="primary" 
+        v-model="date" ></v-date-picker>
+    </v-menu>
+    
     <!-- form end-->
 
     <!-- task -->
@@ -119,11 +146,11 @@
             </v-list-item-title>
 
             <template v-slot:append>
-              <v-expand-x-transition>
+              
                 <v-icon v-if="task.done" color="success">
                   mdi-check
                 </v-icon>
-              </v-expand-x-transition>
+              <v-btn v-else density="compact" size="small" icon="mdi-delete" color="fall" @click.stop="deleteTodo(i)"></v-btn>
             </template>
           </v-list-item>
         </template>
@@ -132,42 +159,3 @@
     <!-- List end-->
   </v-container>
 </template>
-
-
-
-// <script>
-//   export default {
-//     data: () => ({
-//       tasks: [],
-//       newTask: null,
-//     }),
-
-//     computed: {
-//       completedTasks () {
-//         return this.tasks.filter(task => task.done).length
-//       },
-//       progress () {
-//         return this.completedTasks / this.tasks.length * 100
-//       },
-//       remainingTasks () {
-//         return this.tasks.length - this.completedTasks
-//       },
-//     },
-
-//     methods: {
-//       create () {
-
-//         this.tasks.push({
-//           done: false,
-//           text: this.newTask,
-//         })
-        
-//         localStorage.setItem('todos', JSON.stringify(this.tasks));
-        
-        
-
-//         this.newTask = null
-//       },
-//     },
-//   }
-// </script>
