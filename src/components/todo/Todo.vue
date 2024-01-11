@@ -43,7 +43,7 @@
     <!-- form end-->
 
     <!-- todo count -->
-    <TodoCount :todos = "todos" :hideCompleted="hideCompleted" @clear-todos ="clearTodos" @hide-content="hideContent"/>
+    <TodoCount :todos = "todos" @clear-todos ="clearTodos" @hide-content="hideContent"/>
     <!-- todos count end -->
 
     <!-- List -->

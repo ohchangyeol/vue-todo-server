@@ -3,7 +3,6 @@
 
   const props = defineProps({
       todos : Array,
-      hideCompleted : Boolean
   })
   const emit = defineEmits(['clearTodos' , 'hideContent']);
 
