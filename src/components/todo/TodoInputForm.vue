@@ -1,7 +1,5 @@
 <script setup>
     import {ref ,watch}   from "vue";
-    import {todoStore}    from "../../store/todoStore";
-
     const emit = defineEmits({
         createTodo : (paramObj)=>{
             if(paramObj.text === '') {

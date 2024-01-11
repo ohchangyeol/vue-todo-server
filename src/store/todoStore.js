@@ -1,9 +1,10 @@
 
-import { watch, reactive ,computed} from "vue"
+import { watch, reactive } from "vue"
 
-let todos = reactive(JSON.parse(localStorage.getItem('todos')) || []);
+const todos = reactive(JSON.parse(localStorage.getItem('todos')) || []);
 
-export const todoStore = {
+
+export const store = {
     addTodo : (obj)=> {
         todos.push(obj);
     },
@@ -13,6 +14,9 @@ export const todoStore = {
     removeTodo: index =>{
         todos.splice(index,1)
         console.log(todos)
+    },
+    clearTodos : ()=>{
+        todos.splice(0)
     }
     
 }

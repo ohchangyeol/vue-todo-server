@@ -1,8 +1,8 @@
 <script setup>
 
-import Todo from "./components/todo/Todo.vue"
+import Contents from "./components/Contents.vue"
 </script>
 
 <template>
-<Todo></Todo>
+    <Contents/>
 </template>

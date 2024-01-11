@@ -1,20 +1,23 @@
 <script setup>
   
-  import {todoStore} from "../../store/todoStore";
-  import InputForm  from "./InputForm.vue";
+  import {store} from "../../store/todoStore";
+  import TodoInputForm  from "./TodoInputForm.vue";
   import TodoCount  from "./TodoCount.vue";
   import TodoCard  from "./TodoCard.vue";
 
-  const todos = todoStore.getTodos();
+  const todos = store.getTodos();
 
   function createTodo(paramObj) {
-    todoStore.addTodo(paramObj);
+    store.addTodo(paramObj);
   }
 
   const deleteTodo = (index)=> {
-    todoStore.removeTodo(index)
+    store.removeTodo(index)
   }
 
+  const clearTodos = () => {
+    store.clearTodos();
+  }
 </script>
 
 <template>
@@ -23,11 +26,11 @@
       <span>😢 Todo List 😢</span>
     </h2>
     <!-- form -->
-    <InputForm @create-todo="createTodo"/>
+    <TodoInputForm @create-todo="createTodo"/>
     <!-- form end-->
 
     <!-- todo count -->
-    <TodoCount :todos = "todos"/>
+    <TodoCount :todos = "todos" @clear-todos ="clearTodos"/>
     <!-- todos count end -->
 
     <!-- List -->
