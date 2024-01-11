@@ -1,13 +1,15 @@
 <script setup>
   
+  import { ref , computed} from "vue";
   import {store} from "../../store/todoStore";
   import TodoInputForm  from "./TodoInputForm.vue";
   import TodoCount  from "./TodoCount.vue";
   import TodoCard  from "./TodoCard.vue";
 
   const todos = store.getTodos();
+  let hideCompleted = ref(false);
 
-  function createTodo(paramObj) {
+  const createTodo = (paramObj) => {
     store.addTodo(paramObj);
   }
 
@@ -18,6 +20,17 @@
   const clearTodos = () => {
     store.clearTodos();
   }
+
+  const filteredTodos = computed(() => {
+    return hideCompleted.value
+      ? todos.filter((t) => !t.done)
+      : todos
+  })
+  const hideContent = ()=>{
+    debugger
+    hideCompleted.value = !hideCompleted.value
+  }
+
 </script>
 
 <template>
@@ -30,11 +43,11 @@
     <!-- form end-->
 
     <!-- todo count -->
-    <TodoCount :todos = "todos" @clear-todos ="clearTodos"/>
+    <TodoCount :todos = "todos" :hideCompleted="hideCompleted" @clear-todos ="clearTodos" @hide-content="hideContent"/>
     <!-- todos count end -->
 
     <!-- List -->
-    <TodoCard :todos = 'todos' @delete-todo ="deleteTodo"/>
+    <TodoCard :todos = 'filteredTodos' @delete-todo ="deleteTodo"/>
     <!-- List end-->
   </v-container>
 </template>

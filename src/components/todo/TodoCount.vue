@@ -1,25 +1,35 @@
 <script setup>
-    import { computed } from "vue";
+  import { computed ,ref } from "vue";
 
-    const props = defineProps({
-        todos : Array
-    })
-    const emit = defineEmits(['clearTodos']);
+  const props = defineProps({
+      todos : Array,
+      hideCompleted : Boolean
+  })
+  const emit = defineEmits(['clearTodos' , 'hideContent']);
+
+  
 
 
-    const completedTodos = computed(()=>{
-        return props.todos.filter(todo => todo.done).length
-    })
-    const progress = computed(()=>{
-        return completedTodos.value / props.todos.length * 100
-    })
-    const remainingTodos = computed(()=>{
-        return props.todos.length - completedTodos.value
-    })
+  const completedTodos = computed(()=>{
+      return props.todos.filter(todo => todo.done).length
+  })
+  const progress = computed(()=>{
+      return completedTodos.value / props.todos.length * 100
+  })
+  const remainingTodos = computed(()=>{
+      return props.todos.length - completedTodos.value
+  })
 
-    const emitClearTodos = () =>{
-      emit('clearTodos');
-    }
+  const emitClearTodos = () =>{
+    emit('clearTodos');
+  }
+
+  const emitHideContent = () =>{
+    emit('hideContent');
+  }
+  
+
+
 </script>
 
 <template>
@@ -34,8 +44,17 @@
           </v-fade-transition>
         </h2>  
       </div>
-      <div>
-        <v-btn @click.stop="emitClearTodos" >clear</v-btn>
+      <div class ="d-flex align-center justify-space-between">
+        <div fluid class ="mr-2">
+          <v-switch
+            color="primary"
+            label="hide"
+            hide-details
+            @click.stop="emitHideContent"
+          ></v-switch>
+        </div>
+        <v-spacer></v-spacer>
+        <v-btn @click.stop="emitClearTodos" > clear</v-btn>
       </div>
       
   </div>

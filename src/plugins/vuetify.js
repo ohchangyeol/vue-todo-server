@@ -9,7 +9,6 @@ import * as directives from 'vuetify/directives'
 import * as labs from 'vuetify/labs/components'
 import DayJsAdapter from '@date-io/dayjs'
 import { VCalendar } from 'vuetify/labs/VCalendar'
-// import { VuetifyDateAdapter } from 'vuetify/date/adapters/vuetify'
 
 // Locales
 import { ko } from 'vuetify/locale'
@@ -29,11 +28,8 @@ export function installVuetify (app) {
     },
     directives,
     date: {
-        adapter: {
-            DayJsAdapter,
-            // VuetifyDateAdapter,
-        },
-    },
+        adapter:  DayJsAdapter,
+      },
     // defaults: {
     //   global: {
     //     eager: false,

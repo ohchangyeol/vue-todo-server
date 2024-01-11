@@ -1,26 +1,26 @@
 
-import { watch, reactive } from "vue"
+import { watch, ref } from "vue"
 
-const todos = reactive(JSON.parse(localStorage.getItem('todos')) || []);
+const todos = ref(JSON.parse(localStorage.getItem('todos')) || []);
 
 
 export const store = {
     addTodo : (obj)=> {
-        todos.push(obj);
+        todos.value.push(obj);
     },
     getTodos : ()=>{
-        return todos;
+        return todos.value;
     },
     removeTodo: index =>{
-        todos.splice(index,1)
+        todos.value.splice(index,1)
         console.log(todos)
     },
     clearTodos : ()=>{
-        todos.splice(0)
+        todos.value.splice(0)
     }
     
 }
 
-watch(todos, newVal =>{
+watch(todos.value, newVal =>{
     localStorage.setItem('todos', JSON.stringify(newVal));
 } , {deep:true })
