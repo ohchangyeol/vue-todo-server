@@ -27,9 +27,9 @@ export function installVuetify (app) {
       VCalendar,
     },
     directives,
-    date: {
-        adapter: DayJsAdapter,
-      },
+    // date: {
+    //     adapter: DayJsAdapter,
+    //   },
     // defaults: {
     //   global: {
     //     eager: false,
@@ -144,8 +144,8 @@ export function installVuetify (app) {
     //       },
     //     },
     //   },
-    ssr: true,
     },
+    ssr: true,
   })
   app.use(vuetify)
 }

@@ -1,6 +1,6 @@
 <script setup>
     import {ref ,watch}   from "vue";
-    
+
     const emit = defineEmits({
         createTodo : (paramObj)=>{
             if(paramObj.text === '') {
@@ -37,7 +37,8 @@
 </script>
 
 <template>
-    <v-menu>
+    <!-- 일단 주석 치고 다른것으로 사용함... -->
+    <!-- <v-menu>
       <template v-slot:activator="{props}">
         <v-text-field
             v-model="dttm"
@@ -49,8 +50,9 @@
             ></v-text-field>
       </template>
       <v-date-picker color="primary" show-adjacent-months v-model="dttm" ></v-date-picker>
-    </v-menu>
-
+    </v-menu> -->
+    
+    <v-text-field type="date" label="Date" v-model="dttm"></v-text-field>
     <v-text-field
       v-model="newTask"
       label="Add your work!"
