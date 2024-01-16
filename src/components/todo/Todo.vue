@@ -27,7 +27,7 @@
       : todos
   })
   const hideContent = ()=>{
-    debugger
+    // debugger
     hideCompleted.value = !hideCompleted.value
   }
 

@@ -7,8 +7,8 @@ const props = defineProps({
   const emit = defineEmits(['emitDeleteTodo']);
 
   const emitDeleteTodo = (index) => {
-    console.log("item index :: " , index)
-    debugger
+    // console.log("item index :: " , index)
+    // debugger
     console.log("item props index :: " , props.idx)
     emit('emitDeleteTodo', index)
   }

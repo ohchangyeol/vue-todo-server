@@ -1,5 +1,6 @@
 <script setup>
     import {ref ,watch}   from "vue";
+    
     const emit = defineEmits({
         createTodo : (paramObj)=>{
             if(paramObj.text === '') {
@@ -33,7 +34,6 @@
             dttm.value = formatDate(newDttm);  
         }
     })
-
 </script>
 
 <template>
@@ -48,7 +48,7 @@
             v-bind="props"
             ></v-text-field>
       </template>
-      <v-date-picker color="primary" v-model="dttm" ></v-date-picker>
+      <v-date-picker color="primary" show-adjacent-months v-model="dttm" ></v-date-picker>
     </v-menu>
 
     <v-text-field

@@ -28,7 +28,7 @@ export function installVuetify (app) {
     },
     directives,
     date: {
-        adapter:  DayJsAdapter,
+        adapter: DayJsAdapter,
       },
     // defaults: {
     //   global: {
@@ -74,12 +74,12 @@ export function installVuetify (app) {
     //     },
     //   },
     // },
-    locale: {
-      locale: 'ko',
-      messages: {
-        ko,
-      },
-    },
+    // locale: {
+    //   locale: 'ko',
+    //   messages: {
+    //     ko,
+    //   },
+    // },
     icons: {
       defaultSet: 'mdi',
     //   sets: {
@@ -144,6 +144,7 @@ export function installVuetify (app) {
     //       },
     //     },
     //   },
+    ssr: true,
     },
   })
   app.use(vuetify)
