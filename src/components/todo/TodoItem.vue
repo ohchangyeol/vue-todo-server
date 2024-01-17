@@ -15,6 +15,7 @@ const props = defineProps({
 
 </script>
 
+<!-- ========= template start ========= -->
 <template>
     <div>
         <v-divider v-if="idx !== 0" :key="`${idx}-divider`"/>

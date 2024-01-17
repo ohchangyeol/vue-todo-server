@@ -11,7 +11,7 @@ import TodoItem from './TodoItem.vue'
   }
 </script>
 
-
+<!-- ========= template start ========= -->
 <template>
   <v-card v-if="todos.length > 0">
     <v-slide-x-transition class="py-0" group tag="v-list">

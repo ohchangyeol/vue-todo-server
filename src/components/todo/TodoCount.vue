@@ -1,5 +1,5 @@
 <script setup>
-  import { computed ,ref } from "vue";
+  import { computed  } from "vue";
 
   const props = defineProps({
       todos : Array,
@@ -27,10 +27,9 @@
     emit('hideContent');
   }
   
-
-
 </script>
 
+<!-- ========= template start ========= -->
 <template>
   <div class ="d-flex justify-space-between">
       <div>

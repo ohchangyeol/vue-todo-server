@@ -1,41 +1,35 @@
 <script setup>
     import {ref ,watch}   from "vue";
-
-    const emit = defineEmits({
-        createTodo : (paramObj)=>{
-            if(paramObj.text === '') {
-                alert("공백이 입력 되었습니다.")
-                return false;
-            }else{
-                return true;
-            }
-        }
-    });
+    import  TodoColorInput  from "./TodoColorInput.vue";
+    import  TodoInputText  from "./TodoInputText.vue";
 
     const dttm = ref((new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10));
-    let newTask = ref('');
 
-    function emitCreateTodo() {
-        const paramObj = {
-            done: false,
-            text: newTask.value,
-            dttm: dttm.value
-        };
+    const color = ref("");
+    
+    const emit = defineEmits(['createTodo']);
+
+    function emitCreateTodo(paramObj) {
+        paramObj.dttm = dttm.value;
+        paramObj.color = color.value;
         emit('createTodo' , paramObj )
-        newTask.value = '';
     }
-
-    const formatDate = (date) => {
-        return date.toISOString().substr(0, 10);
+    
+    function setupColor(clr) {
+        color.value = clr
     }
-
+    
     watch(dttm, (newDttm)=>{
         if(typeof newDttm !== 'string'){
-            dttm.value = formatDate(newDttm);  
+            dttm.value = date.toISOString().substr(0, 10);  
         }
     })
+
+    
+
 </script>
 
+<!-- ========= template start ========= -->
 <template>
     <!-- 일단 주석 치고 다른것으로 사용함... -->
     <!-- <v-menu>
@@ -53,22 +47,9 @@
     </v-menu> -->
     
     <v-text-field type="date" label="Date" v-model="dttm"></v-text-field>
-    <v-text-field
-      v-model="newTask"
-      label="Add your work!"
-      variant="solo"
-      @keydown.enter="emitCreateTodo"
-      >
-      <template v-slot:append-inner>
-        <v-fade-transition>
-          <v-btn
-            v-show="newTask"
-            icon="mdi-plus-circle"
-            variant="text"
-            @click="emitCreateTodo"
-          ></v-btn>
-        </v-fade-transition>
-      </template>
-    </v-text-field>
+
+    <TodoInputText  @emit-create-todo="emitCreateTodo"/>
+
+    <TodoColorInput @emit-color ="setupColor"/>
 </template>
 
