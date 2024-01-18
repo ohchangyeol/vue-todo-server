@@ -1,8 +1,8 @@
 <script setup>
     import  {ref} from "vue";
-    import  TodoInputText  from "@/components/todo/TodoInputText.vue";
-    import  TodoColorInput  from "@/components/todo/TodoColorInput.vue";
-    import  TodoCard  from "@/components/todo/TodoCard.vue";
+    import  TodoInputText  from "@/components/contents/todo/TodoInputText.vue";
+    import  TodoColorInput  from "@/components/contents/todo/TodoColorInput.vue";
+    import  TodoCard  from "@/components/contents/todo/TodoCard.vue";
 
     const props =defineProps({
         filteredTodos : Array

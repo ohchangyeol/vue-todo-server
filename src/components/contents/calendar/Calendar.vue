@@ -1,6 +1,6 @@
 <script setup>
-  import { ref,onMounted , computed ,watch} from "vue";
-  import {store} from "../../store/todoStore";
+  import { ref, computed ,watch} from "vue";
+  import {store} from "@/store/todoStore";
   import CalendarTodo from "./CalendarTodo.vue";
 
   const events = ref([])

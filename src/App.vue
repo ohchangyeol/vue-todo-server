@@ -1,7 +1,7 @@
 <script setup>
 
-import Contents from "./components/Contents.vue"
-import Nav from "./components/Nav.vue"
+import Contents from "@/components/contents/Contents.vue"
+import Nav from "@/components/Nav.vue"
 </script>
 
 <!-- ========= template start ========= -->

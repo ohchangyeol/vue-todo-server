@@ -1,13 +1,16 @@
 // routes/index.js
 import { createRouter, createWebHistory  } from 'vue-router';
 
-import Todo from "@/components/todo/Todo.vue"
-import Calendar from "@/components/calendar/Calendar.vue"
+import Login from "@/components/Login.vue"
+import SignUp from "@/components/SignUp.vue"
+import Todo from "@/components/contents/todo/Todo.vue"
+import Calendar from "@/components/contents/calendar/Calendar.vue"
 
 const routes =[
   {
     path: '/',
-    redirect: '/todos',
+    // redirect: '/todos',
+    component : Login,
   },
   {
     name : "Todos",
@@ -20,7 +23,13 @@ const routes =[
     path: "/calendar",
     component: Calendar,
     icon : "mdi-calendar"
+  },
+  {
+    name : "Sign-up" ,
+    path: "/sign-up",
+    component: SignUp,
   }
+  
 ];
 
 export function installRouter (app) {

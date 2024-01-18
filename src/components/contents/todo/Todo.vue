@@ -1,7 +1,7 @@
 <script setup>
   
   import { ref , computed} from "vue";
-  import {store} from "../../store/todoStore";
+  import {store} from "@/store/todoStore";
   import TodoInputForm  from "./TodoInputForm.vue";
   import TodoCount  from "./TodoCount.vue";
   import TodoCard  from "./TodoCard.vue";
