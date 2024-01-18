@@ -1,6 +1,8 @@
 <script setup>
   import pic from '@/assets/img/mokoko.png'
-  import { ref , computed } from 'vue';
+import { fromUnixTime } from 'date-fns';
+import { onMounted } from 'vue';
+  import { ref , computed, reactive } from 'vue';
   
   const errorMessages = ref('');
   const formHasErrors = ref(false);
@@ -12,36 +14,71 @@
 
   const form = computed(()=>{
     return {
-          refName: name.value,
-          refPassword: password.value,
-          refAgainPassword: againPassword.value,
-          refName: name.value,
-        }
+      refEmail: email.value,
+      refPassword: password.value,
+      refAgainPassword: againPassword.value,
+      refName: name.value,
+    }
   })
 
-  function addressCheck () {
-    errorMessages = password.value && !name
-      ? `Hey! I'm required`
+  const formElement = reactive({
+
+  });
+    const refEmail = ref();
+    const refPassword = ref();
+    const refAgainPassword = ref();
+    const refName = ref();
+
+
+  function passwordCheck () {
+    errorMessages.value = password.value != againPassword.value
+      ? `Password does not match`
       : ''
 
     return true
   }
 
-  // function submit () {
-  //   formHasErrors.value = false
+  
+  function submit (event) {
+    formHasErrors.value = false
+    // console.log(form.value);
+    
+    console.log(event)
+    // Object.keys(form.value).forEach(f => {
+    //   console.log(form[f])
+      
+    //   if (!form.value[f]) {
+    //     formHasErrors.value = true
+    //     console.log("?????????????????????????" , form.value[f])
+    //   }
 
-  //   Object.keys(form.value).forEach(f => {
-  //     if (!form[f]) formHasErrors.value = true
-  //     $refs[f].validate(true)
-  //   })
-  // }
+    // })
+    // if(event.checkValidity){
+
+    // }
+
+    
+  }
+
+  const emailRules = [
+        value => {
+          if (value) return true
+
+          return 'E-mail is requred.'
+        },
+        value => {
+          if (/.+@.+\..+/.test(value)) return true
+
+          return 'E-mail must be valid.'
+        },
+      ];
 
   // watch: {
   //     name () {
   //       this.errorMessages = ''
   //     },
   //   },
-  
+
 </script>
 
 
@@ -56,88 +93,100 @@
             :src="pic"
             ></v-img>
         </v-avatar>
+        
         <v-card 
             class="mx-auto pa-12 pb-8"
             ref="form"
             max-width="448"
             rounded="lg"
             elevation="8">
-            <v-text-field
-              label="Account"
-              placeholder="Email address"
-              ref="refEmail"
-              v-model="email"
-              prepend-inner-icon="mdi-email-outline"
-              :rules="[() => !!name || 'This field is required']"
-              :error-messages="errorMessages"
+            <v-form validate-on="submit lazy" @submit.prevent="submit">
+              <v-text-field
+                id = "refEmail"
+                label="Account"
+                placeholder="Email address"
+                ref="refEmail"
+                type="email"
+                v-model="email"
+                prepend-inner-icon="mdi-email-outline"
+                :rules="emailRules
+                  // () => !!email || 'This field is required' ,
+                  // () => !!email && email.indexOf('@') != -1 || 'email should contain @'
+                  // ()=> /.+@.+\..+/.test(value) || 'email should contain @'
+                "
+                required
+              ></v-text-field>
+              <v-text-field
+                id="refPassword"
+                label="Password"
+                placeholder="Enter your password"
+                ref="refPassword"
+                type="password"
+                v-model="password"
+                prepend-inner-icon="mdi-lock-outline"
+                :rules="[
+                  () => !!password || 'This field is required',
+                  () => !!password && password.length > 9 || 'Password must be at least 10 characters long.',
+                ]"
+                required
+              ></v-text-field>
+              <v-text-field              
+                id="refAgainPassword"
+                label="Password again"
+                placeholder="Enter your password again"
+                ref="refAgainPassword"
+                type="password"
+                v-model="againPassword"
+                prepend-inner-icon="mdi-lock-outline"
+                :rules="[() => passwordCheck() ]"
+                :error-messages="errorMessages"
+                required
+              ></v-text-field>
+              <v-text-field
+                id="refName"
+                label="Name"  
+                placeholder="Your Name"
+                ref="refName"
+                v-model="name"
+                prepend-inner-icon="mdi-account-outline"
+                :rules="[() => !!name || 'This field is required']"
+                required
+              ></v-text-field>
               
-              required
-            ></v-text-field>
-            <v-text-field
-              label="Password"
-              placeholder="Enter your password"
-              ref="refPassword"
-              v-model="password"
-              prepend-inner-icon="mdi-lock-outline"
-              :rules="[
-                () => !!address || 'This field is required',
-                addressCheck
-              ]"
-              required
-            ></v-text-field>
-            <v-text-field              
-              label="Password again"
-              placeholder="Enter your password again"
-              ref="refAgainPassword"
-              v-model="againPassword"
-              prepend-inner-icon="mdi-lock-outline"
-              :rules="[() => !!city || 'This field is required', addressCheck]"
-              required
-            ></v-text-field>
-            <v-text-field
-              label="Name"  
-              placeholder="Your Name"
-              ref="refName"
-              v-model="name"
-              prepend-inner-icon="mdi-account-outline"
-              :rules="[() => !!state || 'This field is required']"
-              required
-            ></v-text-field>
-            
-            
-          <v-divider class="mt-12"></v-divider>
+            <v-divider class="mt-12"></v-divider>
 
-          <v-card-actions>
-            <v-btn variant="text">
-              Cancel
-            </v-btn>
-            <v-spacer></v-spacer>
-            <v-slide-x-reverse-transition>
-              <v-tooltip
-                v-if="formHasErrors"
-                location="left"
+            <v-card-actions>
+              <v-btn variant="text">
+                Cancel
+              </v-btn>
+              <v-spacer></v-spacer>
+              <v-slide-x-reverse-transition>
+                <v-tooltip
+                  v-if="formHasErrors"
+                  location="left"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                      icon
+                      class="my-0"
+                      v-bind="attrs"
+                      v-on="on"
+                    >
+                      <v-icon>mdi-refresh</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>Refresh form</span>
+                </v-tooltip>
+              </v-slide-x-reverse-transition>
+              <v-btn
+                color="primary"
+                variant="text"
+                type="submit"
               >
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                    icon
-                    class="my-0"
-                    v-bind="attrs"
-                    v-on="on"
-                  >
-                    <v-icon>mdi-refresh</v-icon>
-                  </v-btn>
-                </template>
-                <span>Refresh form</span>
-              </v-tooltip>
-            </v-slide-x-reverse-transition>
-            <v-btn
-              color="primary"
-              variant="text"
-              @click="submit"
-            >
-              Create
-            </v-btn>
-          </v-card-actions>
+                Create
+              </v-btn>
+            </v-card-actions>
+          </v-form>
         </v-card>
       </v-col>
     </v-row>
