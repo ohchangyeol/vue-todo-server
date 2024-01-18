@@ -15,9 +15,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Todo {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    private String text;
+    private String dttm;
+    private boolean done;
+    private String color;
 }

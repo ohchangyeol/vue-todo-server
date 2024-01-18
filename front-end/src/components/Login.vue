@@ -1,9 +1,19 @@
 <script setup>
     import { ref } from "vue"
     import pic from '@/assets/img/mokoko.png'
+    import axios from "axios";
 
     const visible = ref(false);
     
+    const testAxios = async ()=> {
+      console.log("test")
+      await axios.get("/api/test")
+      .then((res)=>{
+        console.log("성공", res)
+      }).catch((res)=>{
+        console.log("실패", res)
+      })
+    }
 </script>
 
 <template>
@@ -45,7 +55,7 @@
         variant="solo"
         @click:append-inner="visible = !visible"
       ></v-text-field>
-      <v-btn block class="mb-8" color="blue" size="large" variant="tonal"
+      <v-btn block class="mb-8" color="blue" size="large" variant="tonal" @click="testAxios"
         >Log In
       </v-btn>
 
