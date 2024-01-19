@@ -33,7 +33,7 @@
 
     <v-list v-for="(link , i) in router" :key="i">
       <v-list-item
-        v-if="i > 0"
+        v-if="i > 1"
         :prepend-icon="link.icon"
         :title="link.name"
         :to= "link.path"

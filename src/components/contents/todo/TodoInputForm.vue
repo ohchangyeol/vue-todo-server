@@ -1,7 +1,11 @@
 <script setup>
+    import {useTodoStore} from "@/store/todoStore";
     import {ref ,watch}   from "vue";
     import  TodoColorInput  from "./TodoColorInput.vue";
     import  TodoInputText  from "./TodoInputText.vue";
+
+  
+  const { insertTodo } = useTodoStore();
 
     const dttm = ref((new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10));
 
@@ -12,7 +16,9 @@
     function emitCreateTodo(paramObj) {
         paramObj.dttm = dttm.value;
         paramObj.color = color.value;
-        emit('createTodo' , paramObj )
+        // emit('createTodo' , paramObj )
+        insertTodo(paramObj); 
+        
     }
     
     function setupColor(clr) {

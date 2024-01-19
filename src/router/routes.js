@@ -9,8 +9,13 @@ import Calendar from "@/components/contents/calendar/Calendar.vue"
 const routes =[
   {
     path: '/',
-    // redirect: '/todos',
-    component : Login,
+    redirect: '/todos',
+    // component : Login,
+  },
+  {
+    name : "Sign-up" ,
+    path: "/sign-up",
+    component: SignUp,
   },
   {
     name : "Todos",
@@ -24,11 +29,7 @@ const routes =[
     component: Calendar,
     icon : "mdi-calendar"
   },
-  {
-    name : "Sign-up" ,
-    path: "/sign-up",
-    component: SignUp,
-  }
+  
   
 ];
 

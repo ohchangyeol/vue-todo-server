@@ -6,12 +6,9 @@
     //     dttm : String
     // })
     let newTask = ref('');
-    
-
     const emit = defineEmits({
         emitCreateTodo : (paramObj)=>{
             if(paramObj.text === '') {
-                alert("공백이 입력 되었습니다.")
                 return false;
             }else{
                 return true;
@@ -19,7 +16,12 @@
         }
     });
 
+
     function _emitCreateTodo() {
+      if(!newTask.value.trim()){
+        alert("공백입력")
+        return
+      }
         const paramObj = {
             done : false            ,
             text : newTask.value    
@@ -31,11 +33,17 @@
 </script>
 
 <!-- ========= template start ========= -->
-<template>
+<template  >
     <v-text-field
-      v-model="newTask"
+      ref="inputText"
+      v-model.trim="newTask"
       label="Add your work!"
       variant="solo"
+      :rules="[
+        () => !!newTask || 'This field is required',
+      ]"
+      required
+      @input="isActive.value = !isActive.value"
       @keydown.enter="_emitCreateTodo"
       >
       <template v-slot:append-inner>
@@ -50,4 +58,5 @@
         </v-fade-transition>
       </template>
     </v-text-field>
+    
 </template>

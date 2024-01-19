@@ -1,13 +1,13 @@
 <script setup>
   import { computed  } from "vue";
+  import {useTodoStore} from "@/store/todoStore";
 
+  const store = useTodoStore();
+  const { toggleEditMode, removeAllTodo } = store;
   const props = defineProps({
       todos : Array,
   })
-  const emit = defineEmits(['clearTodos' , 'hideContent']);
-
-  
-
+  // const emit = defineEmits(['clearTodos' , 'hideContent']);
 
   const completedTodos = computed(()=>{
       return props.todos.filter(todo => todo.done).length
@@ -19,12 +19,13 @@
       return props.todos.length - completedTodos.value
   })
 
-  const emitClearTodos = () =>{
-    emit('clearTodos');
+  const clearTodos = () =>{
+    removeAllTodo()
+    store.$reset();
   }
 
-  const emitHideContent = () =>{
-    emit('hideContent');
+  function hideToggle(){
+    toggleEditMode();
   }
   
 </script>
@@ -48,11 +49,11 @@
             color="primary"
             label="hide"
             hide-details
-            @click.stop="emitHideContent"
+            @click.stop="hideToggle"
           ></v-switch>
         </div>
         <v-spacer></v-spacer>
-        <v-btn @click.stop="emitClearTodos" > clear</v-btn>
+        <v-btn @click.stop="clearTodos" > clear</v-btn>
       </div>
       
   </div>

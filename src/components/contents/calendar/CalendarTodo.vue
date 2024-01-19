@@ -1,5 +1,7 @@
 <script setup>
     import  {ref} from "vue";
+    import {useTodoStore} from "@/store/todoStore";
+    
     import  TodoInputText  from "@/components/contents/todo/TodoInputText.vue";
     import  TodoColorInput  from "@/components/contents/todo/TodoColorInput.vue";
     import  TodoCard  from "@/components/contents/todo/TodoCard.vue";
@@ -8,8 +10,7 @@
         filteredTodos : Array
     })
 
-    const emit = defineEmits(['createTodo' ,'deleteTodo' ]);
-
+    const { insertTodo } = useTodoStore();
     const dttm = ref((new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10));
 
     const color = ref("");
@@ -19,17 +20,12 @@
     function emitCreateTodo(paramObj) {
         paramObj.dttm = dttm.value;
         paramObj.color = color.value;
-        emit('createTodo' , paramObj )
+        insertTodo(paramObj)
     }
     
     function setupColor(clr) {
         color.value = clr
     }
-
-    const deleteTodo = (index)=> {
-        emit('deleteTodo' , index)
-        //store.removeTodo(index)
-  }
 
     
 </script>
@@ -45,7 +41,7 @@
         <TodoColorInput @emit-color ="setupColor" variant="underlined"/>
         <!-- form end-->
         <!-- List -->
-        <TodoCard :todos = 'props.filteredTodos' @delete-todo ="deleteTodo" variant="underlined" />
+        <TodoCard :todos = 'props.filteredTodos' variant="underlined" />
         <!-- List end-->
   </v-container>
 </template>

@@ -1,35 +1,30 @@
 <script setup>
   
-  import { ref , computed} from "vue";
-  import {store} from "@/store/todoStore";
+  import {useTodoStore} from "@/store/todoStore";
+  import { storeToRefs } from 'pinia';
+
   import TodoInputForm  from "./TodoInputForm.vue";
   import TodoCount  from "./TodoCount.vue";
   import TodoCard  from "./TodoCard.vue";
 
-  const todos = store.getTodos();
-  let hideCompleted = ref(false);
+  const store =useTodoStore();
+  const {todos} = storeToRefs(store);
+  // const {insertTodo } = store;
 
-  const createTodo = (paramObj) => {
-    store.addTodo(paramObj);
-  }
+  // let hideCompleted = ref(false);
 
-  const deleteTodo = (index)=> {
-    store.removeTodo(index)
-  }
+  // const createTodo = (paramObj) => {
+  //   insertTodo(paramObj);
+  // }
 
-  const clearTodos = () => {
-    store.clearTodos();
-  }
+  // const hideContent = ()=>{
+  //   debugger
+  //   hideCompleted.value = !hideCompleted.value
+  // }
 
-  const filteredTodos = computed(() => {
-    return hideCompleted.value
-      ? todos.filter((t) => !t.done)
-      : todos
-  })
-  const hideContent = ()=>{
-    // debugger
-    hideCompleted.value = !hideCompleted.value
-  }
+  // onMounted(()=>{
+  //   console.log("todo 마운트 ");
+  // })
 
 </script>
 
@@ -40,15 +35,15 @@
       <span>😢 Todo List 😢</span>
     </h2>
     <!-- form -->
-    <TodoInputForm @create-todo="createTodo"/>
+    <TodoInputForm/>
     <!-- form end-->
 
     <!-- todo count -->
-    <TodoCount :todos = "todos" @clear-todos ="clearTodos" @hide-content="hideContent"/>
+    <TodoCount :todos = "todos"/>
     <!-- todos count end -->
 
     <!-- List -->
-    <TodoCard :todos = 'filteredTodos' @delete-todo ="deleteTodo"/>
+    <TodoCard :todos = 'store.filteredTodos'/>
     <!-- List end-->
   </v-container>
 </template>
