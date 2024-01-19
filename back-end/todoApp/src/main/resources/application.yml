@@ -8,7 +8,11 @@ spring :
     username: sa
     password:
     driver-class-name: org.h2.Driver
-
+  sql:
+    init:
+#      schema-locations: classpath:schema.sql
+#      data-locations: classpath:data.sql
+      mode: never
   jpa:
     hibernate:
       ddl-auto: update
@@ -21,3 +25,4 @@ logging:
   level:
     org.hibernate.SQL: debug
     org.hibernate.type: trace
+

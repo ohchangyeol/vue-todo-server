@@ -3,10 +3,7 @@ package com.todo.todoApp.controller;
 import com.todo.todoApp.domain.Todo;
 import com.todo.todoApp.service.TodoServie;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,12 +14,27 @@ public class TodoController {
 
     @GetMapping("/api/selectTodo")
     public List<Todo> selectTodo(){
-        List<Todo> todos = todoServie.selectTodo();
-        return todos;
+        return todoServie.selectTodo();
     }
 
     @PostMapping("api/addTodo")
-    public void addTodo( @RequestBody Todo todo){
-        todoServie.addTodo(todo);
+    public Todo addTodo( @RequestBody Todo todo){
+        return todoServie.addTodo(todo);
+    }
+
+    @DeleteMapping("api/deleteTodo/{id}")
+    public void deleteTodo( @PathVariable("id") Long id){
+        todoServie.deleteTodo(id);
+    }
+
+    @DeleteMapping("api/deleteAllTodo")
+    public void deleteAllTodo(){
+        todoServie.deleteAllTodo();
+    }
+
+
+    @PutMapping("api/updateTodo")
+    public Todo updateTodo( @RequestBody Todo todo){
+        return todoServie.updateTodo(todo);
     }
 }

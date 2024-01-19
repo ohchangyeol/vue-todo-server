@@ -13,11 +13,22 @@ public class TodoServie {
     private final TodoRepository todoRepository;
 
     public List<Todo> selectTodo(){
-        List<Todo> todos = todoRepository.findAll();
-        return todos;
+        return todoRepository.findAll();
     }
 
-    public void addTodo(Todo todo) {
-        todoRepository.save(todo);
+    public Todo addTodo(Todo todo) {
+          return todoRepository.save(todo);
+    }
+
+    public void deleteTodo(Long id) {
+        todoRepository.deleteById(id);
+    }
+
+    public Todo updateTodo(Todo todo) {
+        return todoRepository.save(todo);
+    }
+
+    public void deleteAllTodo() {
+        todoRepository.deleteAllInBatch();
     }
 }
