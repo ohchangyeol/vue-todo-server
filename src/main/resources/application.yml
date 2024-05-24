@@ -4,7 +4,7 @@ spring :
 #      enabled: true  # H2 Console? ???? ?? (H2 Console? H2 Database? UI? ????? ??)
 #      path: /h2-consol
   datasource:
-    url: jdbc:mariadb://127.0.0.1:5000/test
+    url: jdbc:mariadb://localhost:3306/test
     username: root
     password: 123456
 #    driver-class-name: org.h2.Driver
